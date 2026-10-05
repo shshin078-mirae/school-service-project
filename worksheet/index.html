@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>우리 학교를 바꾸는 작은 서비스 - 온라인 활동지</title>
+<style>
+:root{
+  --bg:#f6f8fb;--card:#fff;--ink:#1f2937;--line:#dbe4ef;--blue:#2563eb;
+  --soft:#eef4ff;--green:#ecfdf5;--orange:#fff7ed;--purple:#f5f3ff
+}
+*{box-sizing:border-box}
+body{font-family:Arial,'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);margin:0;line-height:1.55}
+.wrap{max-width:920px;margin:auto;padding:22px}
+.hero,.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;margin:16px 0}
+.hero{background:#eaf2ff}.hero h1{margin:0 0 6px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+label{font-weight:700;display:block;margin:10px 0 6px}
+input[type=text],textarea,select{width:100%;border:1px solid #cbd5e1;border-radius:10px;padding:10px;font:inherit;background:#fff}
+textarea{min-height:82px;resize:vertical}
+.choices,.idea-buttons,.btnrow{display:flex;gap:8px;flex-wrap:wrap}
+.choices label{font-weight:500;border:1px solid var(--line);background:#f8fafc;padding:7px 10px;border-radius:999px;margin:0}
+.idea-btn{border:1px solid #cbd5e1;background:#fff;border-radius:999px;padding:8px 12px;cursor:pointer;font-weight:700}
+.note{background:var(--soft);border-left:5px solid var(--blue);padding:12px 14px;border-radius:10px;margin:12px 0}
+.note.green{background:var(--green);border-color:#14b8a6}
+.note.orange{background:var(--orange);border-color:#f59e0b}
+.note.purple{background:var(--purple);border-color:#8b5cf6}
+.prompt{white-space:pre-wrap;background:#0f172a;color:#e2e8f0;padding:15px;border-radius:14px;font-family:Consolas,monospace;font-size:14px;min-height:180px}
+.checks{display:grid;gap:8px}
+.check{display:flex;gap:9px;align-items:flex-start;background:#f8fafc;border:1px solid #e2e8f0;padding:9px 11px;border-radius:10px}
+.check input{margin-top:4px}
+button,a.btn{display:inline-block;border:0;border-radius:10px;padding:10px 14px;font-weight:700;text-decoration:none;cursor:pointer;margin:8px 6px 0 0}
+.primary{background:var(--blue);color:#fff}.secondary{background:#e2e8f0;color:#111827}.success{background:#0f766e;color:#fff}
+.section{display:inline-flex;width:32px;height:32px;align-items:center;justify-content:center;border-radius:50%;background:var(--blue);color:#fff;margin-right:8px}
+.small{color:#64748b;font-size:13px}
+.preview{display:none;margin-top:10px;border:1px dashed #94a3b8;border-radius:12px;padding:10px;background:#f8fafc}
+.preview img{max-width:100%;max-height:240px;border-radius:10px;display:block;margin:auto}
+.preview-msg{font-size:13px;color:#64748b;margin-top:6px;text-align:center}
+.subbox{border:1px solid #e2e8f0;border-radius:14px;padding:14px;margin-top:12px;background:#fcfcfd}
+.image-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+@media(max-width:700px){.grid2,.grid3{grid-template-columns:1fr}.image-steps{grid-template-columns:repeat(2,1fr)}.wrap{padding:12px}}
+@media(max-width:420px){.image-steps{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hero">
+  <h1>🏫 우리 학교를 바꾸는 작은 서비스</h1>
+  <p>“이런 사이트 하나 있으면 좋겠다!” — 6회차 온라인 활동지</p>
+  <div class="grid2">
+    <div><label>이름</label><input id="student" type="text"></div>
+    <div><label>팀/번호(선택)</label><input id="team" type="text"></div>
+  </div>
+</div>
+
+<div class="card">
+  <h2><span class="section">1</span>서비스 기획하기</h2>
+  <div class="note">기능이 많은 홈페이지가 아니라 <b>학교생활의 작은 불편 하나를 해결하는 서비스</b>를 만듭니다.</div>
+
+  <h3>① 어디서 생기는 어떤 불편인가요?</h3>
+  <div class="choices">
+    <label><input type="radio" name="place" value="교실"> 교실</label>
+    <label><input type="radio" name="place" value="복도"> 복도</label>
+    <label><input type="radio" name="place" value="급식실"> 급식실</label>
+    <label><input type="radio" name="place" value="도서관"> 도서관</label>
+    <label><input type="radio" name="place" value="체육관"> 체육관</label>
+    <label><input type="radio" name="place" value="등하굣길"> 등하굣길</label>
+    <label><input type="radio" name="place" value="학교 전체"> 학교 전체</label>
+    <label><input type="radio" name="place" value="기타" onclick="toggleOtherPlace(true)"> 기타</label>
+  </div>
+  <div id="otherPlaceWrap" style="display:none;margin-top:10px">
+    <input id="otherPlace" type="text" placeholder="기타 장소를 직접 적어주세요">
+  </div>
+
+  <label>문제 상황</label>
+  <textarea id="problem" placeholder="예: 학교에서 물건을 잃어버렸을 때 어디에 보관되어 있는지 알기 어렵다."></textarea>
+
+  <div class="idea-buttons" style="margin-top:10px">
+    <button class="idea-btn" type="button" onclick="useIdea('분실물')">분실물 찾기</button>
+    <button class="idea-btn" type="button" onclick="useIdea('아나바다')">학교 아나바다</button>
+    <button class="idea-btn" type="button" onclick="useIdea('준비물')">준비물 알림</button>
+    <button class="idea-btn" type="button" onclick="useIdea('행사')">학교 행사 안내</button>
+    <button class="idea-btn" type="button" onclick="useIdea('우산')">우산 대여</button>
+    <button class="idea-btn" type="button" onclick="useIdea('도서')">도서 추천</button>
+  </div>
+
+  <h3>② 누가 이 사이트를 쓸까요?</h3>
+  <select id="user">
+    <option value="">선택하세요</option>
+    <option>우리 반 친구들</option><option>1학년 전체</option><option>전교생</option>
+    <option>선생님</option><option>학생과 선생님 모두</option>
+  </select>
+  <label>언제 사용할까요?</label>
+  <input id="usecase" type="text" placeholder="예: 물건을 잃어버렸거나 주운 물건을 등록할 때">
+
+  <h3>③ 꼭 필요한 기능 3개</h3>
+  <div class="grid3">
+    <input id="f1" type="text" placeholder="기능 1">
+    <input id="f2" type="text" placeholder="기능 2">
+    <input id="f3" type="text" placeholder="기능 3">
+  </div>
+  <p class="small">예: 등록하기 / 목록 보기 / 검색하기 / 신청하기 / 상태 바꾸기 / 투표하기 / 위치 보기 / 일정 보기</p>
+
+  <h3>④ 서비스 이름</h3>
+  <input id="service" type="text" placeholder="예: 찾아줄께~!">
+</div>
+
+<div class="card">
+  <h2><span class="section">2</span>이미지를 웹페이지에 넣어보기</h2>
+
+  <div class="note green"><b>ImgBB란?</b> 이미지를 인터넷에 올리고 웹페이지에서 사용할 수 있는 이미지 주소(URL)를 만들어주는 서비스입니다.</div>
+
+  <div class="note orange"><b>왜 사용할까?</b> 이미지를 HTML 안에 직접 넣을 수도 있지만 코드가 길고 복잡해질 수 있어, 오늘은 이미지 주소만 연결하는 방법을 사용합니다.</div>
+
+  <h3>이미지를 웹페이지에 넣는 5단계</h3>
+  <div class="image-steps">
+    <div class="subbox" style="text-align:center"><b>1</b><br>이미지 검색</div>
+    <div class="subbox" style="text-align:center"><b>2</b><br>이미지 저장</div>
+    <div class="subbox" style="text-align:center"><b>3</b><br>ImgBB 업로드</div>
+    <div class="subbox" style="text-align:center"><b>4</b><br>직접 링크 복사</div>
+    <div class="subbox" style="text-align:center"><b>5</b><br>웹페이지에 적용</div>
+  </div>
+
+  <h3>연습용 웹페이지 만들기</h3>
+  <p>먼저 이미지가 들어갈 자리를 연습하기 위해 간단한 카드형 웹페이지를 만듭니다.</p>
+
+  <div class="btnrow">
+    <a class="btn primary" href="https://gemini.google.com/app?hl=ko" target="_blank" rel="noopener">제미나이 열기</a>
+    <a class="btn secondary" href="https://imgbb.com/" target="_blank" rel="noopener">ImgBB 열기</a>
+  </div>
+
+  <div id="practicePrompt" class="prompt" style="min-height:140px">사진과 제목이 들어가는 카드 2개가 있는 아주 간단한 연습용 웹페이지를 만들어줘.
+
+각 카드에는 이미지가 들어갈 공간과 제목이 보이게 해줘.
+디자인은 단순하게 해줘.
+
+외부 라이브러리는 사용하지 말고,
+HTML, CSS, JavaScript를 모두 하나의 파일에 넣은
+단일 HTML 파일로 만들어줘.</div>
+  <div class="btnrow">
+    <button class="primary" type="button" onclick="copyBlock('practicePrompt','practiceCopied')">연습용 웹페이지 프롬프트 복사</button>
+    <span id="practiceCopied" class="small"></span>
+  </div>
+
+  <h3>첫 번째 이미지 같이 해보기</h3>
+  <div class="subbox">
+    <p><b>1. 이미지 검색</b> — 필요한 이미지를 하나 찾습니다.</p>
+    <p><b>2. 이미지 다운로드</b> — 컴퓨터에 저장합니다.</p>
+    <p><b>3. ImgBB 업로드</b> — 저장한 이미지를 ImgBB에 올립니다.</p>
+    <p><b>4. 직접 링크 복사</b> — Direct Link를 복사합니다.</p>
+    <p><b>5. 웹페이지에 적용</b> — 제미나이에게 아래처럼 요청합니다.</p>
+  </div>
+
+  <div id="imageInsertPrompt" class="prompt" style="min-height:90px">1번 카드 이미지에 이 주소를 사용해줘:
+[ImgBB 직접 링크]</div>
+  <div class="btnrow">
+    <button class="primary" type="button" onclick="copyBlock('imageInsertPrompt','imageInsertCopied')">이미지 넣기 프롬프트 복사</button>
+    <span id="imageInsertCopied" class="small"></span>
+  </div>
+
+  <h3>두 번째 이미지는 혼자 해보기</h3>
+  <p>이번에는 <b>내 서비스에 사용할 이미지</b>를 하나 찾아 같은 방법으로 두 번째 카드에 넣어봅니다.</p>
+
+  <div class="note">⚠️ 학생 얼굴, 이름표, 전화번호 등 개인정보가 보이는 이미지는 사용하지 않습니다. 인터넷 이미지는 오늘 수업 연습용으로 사용합니다.</div>
+
+  <div class="note purple"><b>ImgBB 이용이 원활하지 않을 때</b><br>
+  패들렛에 이미지를 올린 뒤 해당 이미지를 클릭하고 이미지 주소를 복사해서 사용할 수 있습니다.</div>
+</div>
+
+<div class="card">
+  <h2><span class="section">3</span>내 서비스 웹페이지 만들기</h2>
+
+  <div class="note purple">
+    <b>localStorage = 지금 사용하는 브라우저가 기억하는 저장공간</b><br>
+    F5를 눌러도 저장한 내용이 남을 수 있지만, <b>다른 친구 컴퓨터와 자동으로 공유되지는 않습니다.</b><br>
+    여러 사람이 같은 데이터를 함께 보려면 공용 데이터베이스가 필요합니다.
+  </div>
+  <p class="small">※ 이 온라인 활동지도 여러분이 작성한 내용을 잃지 않도록 같은 브라우저의 localStorage에 자동 저장하고 있습니다.</p>
+
+  <h3>① 프롬프트를 만들기 전 기획 확인</h3>
+  <div class="checks">
+    <label class="check"><input type="checkbox" data-k="plan1">문제 상황이 구체적으로 적혀 있다.</label>
+    <label class="check"><input type="checkbox" data-k="plan2">누가 사용할지 정했다.</label>
+    <label class="check"><input type="checkbox" data-k="plan3">핵심 기능이 정확히 3개다.</label>
+    <label class="check"><input type="checkbox" data-k="plan4">세 기능이 내가 정한 문제 해결과 관련 있다.</label>
+  </div>
+
+  <h3>② 기본 제작 프롬프트</h3>
+  <p>첫 번째 제작에서는 <b>이미지 링크를 넣지 않습니다.</b> 먼저 문제·사용자·기능 3개가 작동하는 MVP부터 만듭니다.</p>
+  <div id="prompt" class="prompt"></div>
+  <div class="btnrow">
+    <button class="primary" type="button" onclick="copyPrompt()">기본 제작 프롬프트 복사</button>
+    <span id="copied" class="small"></span>
+  </div>
+
+  <h3>③ MVP가 만들어진 뒤 이미지 추가</h3>
+  <p>기본 기능이 작동하면, STEP 2에서 익힌 방법으로 필요한 이미지를 찾아 ImgBB 링크를 만든 뒤 원하는 위치에 추가합니다.</p>
+  <p class="small">이미지를 더 넣고 싶다면 이미지 한 장씩 링크와 위치를 바꾸어 같은 방법으로 추가하세요.</p>
+
+  <div class="subbox">
+    <label>ImgBB에서 만든 이미지 링크</label>
+    <input id="serviceImgUrl" type="text" placeholder="예: https://i.ibb.co/......jpg">
+
+    <label>어디에 이미지를 넣을까요?</label>
+    <input id="serviceImgPlace" type="text" placeholder="예: 제목 왼쪽에 로고로 / 등록된 물건 카드 안에 / 첫 화면 상단에">
+  </div>
+
+  <div id="serviceImagePrompt" class="prompt" style="min-height:150px"></div>
+  <div class="btnrow">
+    <button class="primary" type="button" onclick="copyServiceImagePrompt()">이미지 추가 프롬프트 복사</button>
+    <span id="serviceImageCopied" class="small"></span>
+  </div>
+</div>
+
+<div class="card">
+  <h2><span class="section">4</span>테스트하기</h2>
+  <div class="note">무언가가 만들어졌다고 끝이 아닙니다. 직접 테스트해 봅시다.</div>
+
+  <div class="checks">
+    <label class="check"><input type="checkbox" data-k="qa1">기능 1이 잘 작동한다.</label>
+    <label class="check"><input type="checkbox" data-k="qa2">기능 2가 잘 작동한다.</label>
+    <label class="check"><input type="checkbox" data-k="qa3">기능 3이 잘 작동한다.</label>
+    <label class="check"><input type="checkbox" data-k="qa4">첫 화면만 보고 무엇을 하는 사이트인지 알 수 있다.</label>
+    <label class="check"><input type="checkbox" data-k="qa5">긴 글이나 예상하지 못한 값을 넣어도 화면이 깨지지 않는다.</label>
+    <label class="check"><input type="checkbox" data-k="qa6">내 서비스에서 기억해야 하는 정보가 있다면 F5를 눌러도 남아 있다.</label>
+  </div>
+
+  <h3>내 서비스만의 추가 테스트 1개</h3>
+  <label>일부러 해볼 행동</label>
+  <input id="customTest" type="text" placeholder="예: 아무것도 입력하지 않고 등록 버튼을 눌러본다.">
+  <div class="choices" style="margin-top:8px">
+    <label><input type="radio" name="customResult" value="통과"> 통과</label>
+    <label><input type="radio" name="customResult" value="수정 필요"> 수정 필요</label>
+  </div>
+
+  <label>발견한 문제</label>
+  <textarea id="qa"></textarea>
+  <label>AI에게 다시 요청할 수정 내용</label>
+  <textarea id="fix"></textarea>
+</div>
+
+<div class="card">
+  <h2><span class="section">5</span>더 쉽게 만들기</h2>
+  <p><b>기능 추가 전에</b> 먼저 사용하기 쉽게 개선합니다.</p>
+  <div class="checks">
+    <label class="check"><input type="checkbox" data-k="ux1">버튼 이름을 더 쉽게 바꾸기</label>
+    <label class="check"><input type="checkbox" data-k="ux2">중요한 버튼을 더 잘 보이게 하기</label>
+    <label class="check"><input type="checkbox" data-k="ux3">필요 없는 설명 하나 삭제하기</label>
+    <label class="check"><input type="checkbox" data-k="ux4">사용 순서를 한눈에 알 수 있게 하기</label>
+    <label class="check"><input type="checkbox" data-k="ux5">이미지 크기와 카드 배치 정리하기</label>
+  </div>
+  <label>내가 바꾼 것</label>
+  <textarea id="ux"></textarea>
+
+  <label>시간이 남는다면 v2.0 기능</label>
+  <select id="v2">
+    <option value="">선택 안 함</option><option>검색 기능</option><option>등록 항목 수 카운터</option>
+    <option>상태별 필터</option><option>최신순/이름순 정렬</option>
+  </select>
+</div>
+
+<div class="card">
+  <h2><span class="section">6</span>버그 테스터</h2>
+  <p>빨리 끝났다면 친구 사이트를 잠깐 사용해보고 한 가지를 찾아주세요.</p>
+  <textarea id="peer" placeholder="예: 여기서 어떤 버튼을 눌러야 하는지 조금 헷갈렸어."></textarea>
+</div>
+
+<div class="card">
+  <h2><span class="section">7</span>다음 시간 사용자 테스트 준비</h2>
+  <label>내 서비스 이름</label>
+  <input id="missionService" type="text">
+  <label>친구에게 줄 테스트 미션</label>
+  <textarea id="mission" placeholder="예: ‘검은색 필통’을 찾아서 ‘찾았어요’ 상태로 바꿔보세요."></textarea>
+  <div class="note"><b>다음 시간 규칙:</b> 제작자는 처음부터 설명하지 않습니다. 친구가 혼자 사용하는 모습을 관찰합니다.</div>
+</div>
+
+<div class="card">
+  <h2>✅ 오늘 수업 마무리</h2>
+  <div class="checks">
+    <label class="check"><input type="checkbox" data-k="d1">학교생활의 문제를 하나 정했다.</label>
+    <label class="check"><input type="checkbox" data-k="d2">누가 사용할지 정했다.</label>
+    <label class="check"><input type="checkbox" data-k="d3">핵심 기능 3개를 정했다.</label>
+    <label class="check"><input type="checkbox" data-k="d4">ImgBB로 이미지 링크를 만들었다.</label>
+    <label class="check"><input type="checkbox" data-k="d5">이미지 링크를 사이트에 적용했다.</label>
+    <label class="check"><input type="checkbox" data-k="d6">AI로 서비스 웹페이지를 만들었다.</label>
+    <label class="check"><input type="checkbox" data-k="d7">테스트를 통해 웹페이지를 개선했다.</label>
+  </div>
+  <div class="note green"><b>AI가 만들어주는 것이 끝이 아니다.</b><br>문제를 정하고, 직접 테스트하고, 더 쓰기 좋게 고치는 것이 진짜 서비스 만들기다.</div>
+  <button class="secondary" type="button" onclick="window.print()">인쇄 / PDF 저장</button>
+  <button class="secondary" type="button" onclick="resetAll()">활동지 초기화</button>
+</div>
+
+<p class="small" style="text-align:center">입력 내용은 이 브라우저의 localStorage에 자동 저장됩니다.</p>
+</div>
+
+<script>
+const ids=[
+  'student','team','problem','user','usecase','f1','f2','f3','service','otherPlace','serviceImgUrl','serviceImgPlace',
+  'customTest','qa','fix','ux','v2','peer','missionService','mission'
+];
+
+const ideaData={
+  '분실물':{
+    problem:'학교에서 물건을 잃어버렸을 때 누가 주웠는지, 어디에 보관되어 있는지 알기 어렵다.',
+    user:'전교생',
+    usecase:'물건을 잃어버렸거나 주운 물건을 등록할 때',
+    f1:'분실물 등록하기',f2:'분실물 목록 보기',f3:'찾았어요 상태 바꾸기',
+    service:'찾아줄께~!'
+  },
+  '아나바다':{
+    problem:'사용하지 않는 학용품이나 문제집을 필요한 친구에게 나누기 어렵다.',
+    user:'전교생',
+    usecase:'나눌 물건을 등록하거나 필요한 물건을 찾을 때',
+    f1:'나눔 물건 등록하기',f2:'나눔 목록 보기',f3:'신청·완료 상태 바꾸기',
+    service:'학교 아나바다'
+  },
+  '준비물':{
+    problem:'수업 준비물이나 수행평가 준비물을 잊어버리는 경우가 있다.',
+    user:'우리 반 친구들',
+    usecase:'다음 수업이나 과제 준비물을 확인할 때',
+    f1:'준비물 등록하기',f2:'날짜별 목록 보기',f3:'준비 완료 체크하기',
+    service:'준비물 체크'
+  },
+  '행사':{
+    problem:'학교 행사 일정과 장소를 한눈에 확인하기 어렵다.',
+    user:'전교생',
+    usecase:'다가오는 학교 행사를 확인할 때',
+    f1:'행사 일정 보기',f2:'행사 장소 보기',f3:'관심 행사 표시하기',
+    service:'학교 행사 한눈에'
+  },
+  '우산':{
+    problem:'비 오는 날 우산이 없을 때 빌릴 수 있는 우산이 있는지 알기 어렵다.',
+    user:'전교생',
+    usecase:'우산을 빌리거나 반납할 때',
+    f1:'대여 가능 우산 보기',f2:'우산 대여하기',f3:'반납 상태 바꾸기',
+    service:'우산 빌려줘'
+  },
+  '도서':{
+    problem:'도서관에서 어떤 책을 읽으면 좋을지 찾기 어렵다.',
+    user:'전교생',
+    usecase:'읽을 책을 고르거나 친구에게 책을 추천할 때',
+    f1:'추천 도서 등록하기',f2:'추천 목록 보기',f3:'좋아요 표시하기',
+    service:'우리 학교 책추천'
+  }
+};
+
+function v(id){return (document.getElementById(id)?.value||'').trim()}
+
+function useIdea(key){
+  const d=ideaData[key];
+  document.getElementById('problem').value=d.problem;
+  save();
+}
+
+function makePrompt(){
+return `우리 학교 학생들이 사용할 [${v('service')||'서비스 이름'}] 웹페이지를 만들어줘.
+
+해결하려는 문제는 [${v('problem')||'문제 상황'}]이고,
+주요 사용자는 [${v('user')||'사용자'}]야.
+
+꼭 필요한 기능은 다음 3가지야.
+1. ${v('f1')||'[기능 1]'}
+2. ${v('f2')||'[기능 2]'}
+3. ${v('f3')||'[기능 3]'}
+
+[요구사항]
+- 중학교 1학년 학생이 첫 화면만 봐도 무엇을 하는 사이트인지 알 수 있게 해줘.
+- 화면은 단순하고 직관적으로 구성해줘.
+- 새로고침해도 입력한 내용이 남도록 localStorage를 사용해줘.
+- HTML, CSS, JavaScript를 모두 하나의 파일에 넣은 단일 HTML 파일로 만들어줘.
+- 외부 라이브러리, 외부 프레임워크, CDN은 사용하지 마.
+- React, Vue, Bootstrap, Tailwind 같은 라이브러리는 사용하지 마.
+- 브라우저 기본 기능만 사용해줘.
+- 핵심 기능 3가지만 우선 구현하고 불필요한 기능은 추가하지 마.
+- 전체 코드는 가능하면 300~400줄 이내로 작성해줘.
+- 복잡한 애니메이션, 3D 효과, 무거운 시각효과는 넣지 마.
+- 코드 설명은 길게 하지 말고 완성된 단일 HTML 코드부터 바로 출력해줘.
+- 코드가 길어질 것 같으면 기능을 줄여서라도 한 번에 완성 가능한 형태로 작성해줘.`;
+}
+
+
+function makeServiceImagePrompt(){
+  return `지금 만든 웹페이지의 기존 기능과 디자인은 그대로 유지하고 이미지를 추가해줘.
+
+이미지 주소:
+${v('serviceImgUrl') || '[ImgBB 직접 링크]'}
+
+이미지를 넣을 위치:
+${v('serviceImgPlace') || '[예: 제목 왼쪽에 로고로 / 등록된 물건 카드 안에 / 첫 화면 상단에]'}
+
+[요구사항]
+- 위 주소를 이미지 URL로 사용해줘.
+- 내가 적은 위치에 이미지가 자연스럽게 보이도록 배치해줘.
+- 이미지가 너무 크지 않도록 주변 요소와 어울리게 크기를 조절해줘.
+- 이미지가 로드되지 않아도 화면 전체가 깨지지 않게 해줘.
+- 기존 핵심 기능 3개와 localStorage 기능은 변경하지 마.
+- 다른 기능이나 디자인은 불필요하게 수정하지 마.`;
+}
+
+function refresh(){
+  document.getElementById('prompt').textContent=makePrompt();
+  document.getElementById('serviceImagePrompt').textContent=makeServiceImagePrompt();
+}
+
+function getRadio(name){
+  return document.querySelector(`input[name="${name}"]:checked`)?.value || '';
+}
+
+function toggleOtherPlace(show, shouldSave=true){
+  document.getElementById('otherPlaceWrap').style.display = show ? 'block' : 'none';
+  if(!show) document.getElementById('otherPlace').value = '';
+  if(shouldSave) save();
+}
+
+function save(){
+  let d={};
+  ids.forEach(id=>d[id]=document.getElementById(id)?.value||'');
+  d.place=getRadio('place');
+  d.customResult=getRadio('customResult');
+  document.querySelectorAll('[data-k]').forEach(x=>d[x.dataset.k]=x.checked);
+  localStorage.setItem('schoolServiceSheet',JSON.stringify(d));
+  refresh();
+}
+
+function load(){
+  let d={};
+  try{d=JSON.parse(localStorage.getItem('schoolServiceSheet')||'{}')}catch(e){}
+  ids.forEach(id=>{if(d[id]!=null && document.getElementById(id))document.getElementById(id).value=d[id]});
+  if(d.place){
+    let r=[...document.querySelectorAll('input[name="place"]')].find(x=>x.value===d.place);
+    if(r)r.checked=true;
+    toggleOtherPlace(d.place==='기타', false);
+  }
+  if(d.customResult){
+    let r=[...document.querySelectorAll('input[name="customResult"]')].find(x=>x.value===d.customResult);
+    if(r)r.checked=true;
+  }
+  document.querySelectorAll('[data-k]').forEach(x=>x.checked=!!d[x.dataset.k]);
+  if(!v('missionService'))document.getElementById('missionService').value=v('service');
+  refresh();
+}
+
+async function copyText(text, statusId){
+  try{
+    await navigator.clipboard.writeText(text);
+    document.getElementById(statusId).textContent=' 복사됨!';
+  }catch(e){
+    document.getElementById(statusId).textContent=' 직접 드래그해 복사하세요.';
+  }
+}
+
+function copyPrompt(){copyText(makePrompt(),'copied')}
+function copyServiceImagePrompt(){copyText(makeServiceImagePrompt(),'serviceImageCopied')}
+function copyBlock(blockId,statusId){
+  const t=document.getElementById(blockId).textContent;
+  copyText(t,statusId);
+}
+
+function previewImage(inputId, previewId){
+  const url=v(inputId);
+  const box=document.getElementById(previewId);
+  const img=box.querySelector('img');
+  const msg=box.querySelector('.preview-msg');
+  box.style.display='block';
+  msg.textContent='이미지를 불러오는 중...';
+  if(!url){
+    img.removeAttribute('src');
+    msg.textContent='먼저 이미지 링크를 입력하세요.';
+    return;
+  }
+  img.onload=()=>{msg.textContent='이미지가 잘 보입니다.'};
+  img.onerror=()=>{msg.textContent='이미지가 보이지 않아요. ImgBB의 직접 링크인지 확인하세요.'};
+  img.src=url;
+}
+
+function resetAll(){
+  if(confirm('작성한 내용을 모두 지울까요?')){
+    localStorage.removeItem('schoolServiceSheet');
+    location.reload();
+  }
+}
+
+document.addEventListener('input',e=>{
+  if(e.target.matches('input,textarea,select')){
+    if(e.target.id==='service'&&!v('missionService'))document.getElementById('missionService').value=e.target.value;
+    save();
+  }
+});
+document.addEventListener('change',e=>{
+  if(e.target && e.target.name==='place'){
+    toggleOtherPlace(e.target.value==='기타');
+  } else {
+    save();
+  }
+});
+load();
+</script>
+</body>
+</html>
